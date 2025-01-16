@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:write_turns/providers/last_paragraph_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StartScreen extends StatelessWidget {
+class StartScreen extends ConsumerWidget {
   const StartScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Consumer(builder: (_, WidgetRef ref, __) {
@@ -16,8 +16,9 @@ class StartScreen extends StatelessWidget {
         }),
         TextField(
           // textInputAction: TextInputAction.,
-          onSubmitted: (value) {
-            print('Go button clicked.');
+          onSubmitted: (String value) {
+            // print('Go button clicked.');
+            ref.read(lastParagraphProvider.notifier).state = value;
           },
         ),
         Text('Another widget'),
