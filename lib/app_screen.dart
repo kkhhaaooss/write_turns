@@ -10,7 +10,7 @@ class AppScreen extends ConsumerWidget {
     Widget currentScreen = ref.watch(currentScreenProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editor App'),
+        title: Text('Write Turns App'),
       ),
       body: currentScreen,
       floatingActionButton: FloatingActionButton(
