@@ -19,7 +19,7 @@ class DocumentStorage {
 
   Future<File> writeFile(String contents) async {
     final file = await _localFile;
-    return file.writeAsString(contents, mode: FileMode.append);
+    return file.writeAsString('$contents\n', mode: FileMode.append);
   }
 
   Future<String> readFile() async {
