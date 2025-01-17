@@ -1,14 +1,19 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:write_turns/app_screen.dart';
 
-class EditorApp extends StatelessWidget {
-  const EditorApp({super.key});
+class WritingApp extends StatelessWidget {
+  const WritingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Editor App',
+      title: 'Write Turns',
+      theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
+      // Use dark or light theme based on system setting.
+      themeMode: ThemeMode.system,
       home: AppScreen(),
     );
   }
