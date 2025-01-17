@@ -9,7 +9,6 @@ class DocumentStorage {
   String currentDocument = 'testfile.txt';
   Future<String> get _localPath async {
     final directory = await getExternalStorageDirectory();
-    print(directory == null ? 'Directory NULL' : 'Directory ${directory.path}');
     return directory == null ? '' : directory.path;
   }
 
