@@ -13,12 +13,6 @@ class AppScreen extends ConsumerWidget {
         title: Text('Write Turns App'),
       ),
       body: currentScreen,
-      floatingActionButton: FloatingActionButton(
-        // The read method is a utility to read a provider without listening to it
-        onPressed: () => ref.read(lastParagraphProvider.notifier).state =
-            'This is the new last paragraph. That is all.',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
