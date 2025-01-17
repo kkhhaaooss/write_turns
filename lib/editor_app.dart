@@ -7,6 +7,7 @@ class EditorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Editor App',
       home: AppScreen(),
     );
