@@ -3,5 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 final currentScreenProvider = StateProvider<Widget>((ref) {
-  return EditorScreen();
+  return EditorScreen(
+    storage: DocumentStorage(),
+  );
 });

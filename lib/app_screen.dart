@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:write_turns/providers/current_screen_provider.dart';
-import 'package:write_turns/providers/last_paragraph_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppScreen extends ConsumerWidget {
