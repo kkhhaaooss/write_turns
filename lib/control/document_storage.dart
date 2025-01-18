@@ -6,7 +6,10 @@ class DocumentStorage {
   // temporary String, the currentDocument value will eventually be stored in shared prefs
   String currentDocument = 'testfile.txt';
   Future<String> get _localPath async {
-    final directory = await getExternalStorageDirectory();
+    final Directory? directory;
+    Platform.isAndroid
+        ? directory = await getExternalStorageDirectory()
+        : directory = await getApplicationDocumentsDirectory();
     return directory == null ? '' : directory.path;
   }
 
