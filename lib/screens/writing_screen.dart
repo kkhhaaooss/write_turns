@@ -39,6 +39,7 @@ class EditorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool isTextFieldEnabled = true;
     // will deal with focus later...
     // late TextEditingController controller;
     // controller = TextEditingController();
@@ -52,10 +53,23 @@ class EditorScreen extends ConsumerWidget {
           children: [
             Text(lastParagraph),
             TextField(
+              enabled: isTextFieldEnabled,
+              keyboardType: TextInputType.multiline,
+              minLines: 10,
+              maxLines: 10,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                color: Colors.white,
+                width: 5.0,
+              ))),
               // controller: controller,
               canRequestFocus: true,
               autofocus: true,
               // focusNode: textNode,
+              onChanged: (String value) {
+                print(value == '\n' ? 'Enter detected, submit' : 'xXx');
+              },
               onSubmitted: (String value) {
                 ref.read(lastParagraphProvider.notifier).state = value;
                 storage.writeFile(value);
