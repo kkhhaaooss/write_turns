@@ -9,7 +9,8 @@ class AppScreen extends ConsumerWidget {
     Widget currentScreen = ref.watch(currentScreenProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Write Turns App'),
+        title: Text('Write Turns'),
+        centerTitle: true,
       ),
       body: currentScreen,
     );

@@ -10,8 +10,8 @@ class WritingApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Write Turns',
-      theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
+      theme: FlexThemeData.light(scheme: FlexScheme.brandBlue),
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.brandBlue),
       // Use dark or light theme based on system setting.
       themeMode: ThemeMode.system,
       home: AppScreen(),
