@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:write_turns/control/document_storage.dart';
+import 'package:write_turns/providers/current_paragraph_provider.dart';
 import 'package:write_turns/providers/last_paragraph_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +17,7 @@ class EditorScreen extends ConsumerWidget {
     late FocusNode textNode;
     textNode = FocusNode();
     String lastParagraph = ref.watch(lastParagraphProvider);
+    String currentParagraph = ref.watch(currentParagraphProvider);
     return SizedBox(
       width: double.infinity,
       child: Center(
@@ -39,11 +41,13 @@ class EditorScreen extends ConsumerWidget {
             Expanded(
               flex: 1,
               child: TextField(
+                readOnly: false,
                 enabled: isTextFieldEnabled,
                 keyboardType: TextInputType.multiline,
                 minLines: 10,
                 maxLines: 10,
                 decoration: InputDecoration(
+                  hintText: currentParagraph,
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.white,
@@ -59,9 +63,13 @@ class EditorScreen extends ConsumerWidget {
                 onChanged: (String value) {
                   if (value.contains(String.fromCharCode(13)) ||
                       value.contains(String.fromCharCode(10))) {
+                    textNode.unfocus();
                     ref.read(lastParagraphProvider.notifier).state = value;
+                    ref.read(currentParagraphProvider.notifier).state = value;
                     storage.writeFile(value);
                     controller.clear();
+
+                    FocusScope.of(context).requestFocus(textNode);
                   }
                 },
                 onSubmitted: (String value) {
