@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
 
-class DocumentStorage {
-  // temporary String, the currentDocument value will eventually be stored in shared prefs
+class Storage {
   String currentDocument = 'testfile.txt';
+
   Future<String> get _localPath async {
     final Directory? directory;
     Platform.isAndroid

@@ -1,87 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:write_turns/control/document_storage.dart';
-import 'package:write_turns/providers/current_paragraph_provider.dart';
-import 'package:write_turns/providers/last_paragraph_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_reactive_value/flutter_reactive_value.dart';
+import 'package:write_turns/controllers/storage.dart';
+import 'package:write_turns/screens/widgets/writing_screen/current_paragraph.dart';
+import 'package:write_turns/screens/widgets/writing_screen/last_paragraph.dart';
+import 'package:write_turns/screens/widgets/writing_screen/oops_button.dart';
+import 'package:write_turns/screens/widgets/writing_screen/pause_button.dart';
+import 'package:write_turns/screens/widgets/writing_screen/progress_bar.dart';
+import 'package:write_turns/screens/widgets/writing_screen/timer.dart';
 
-class EditorScreen extends ConsumerWidget {
-  const EditorScreen({super.key, required this.storage});
-  final DocumentStorage storage;
+final previousParagraph = ReactiveValueNotifier('');
+final lastParagraph = ReactiveValueNotifier('Last Paragraph');
+final writingEnabled = ReactiveValueNotifier(true);
+final oopsFlag = ReactiveValueNotifier(false);
+final Storage storage = Storage();
+final FocusNode textFocus = FocusNode();
+final TextEditingController textController = TextEditingController();
+final TextEditingController lastController = TextEditingController();
+
+class WritingScreen extends StatelessWidget {
+  const WritingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    bool isTextFieldEnabled = true;
-    // will deal with focus later...
-    late TextEditingController controller;
-    controller = TextEditingController();
-    late FocusNode textNode;
-    textNode = FocusNode();
-    String lastParagraph = ref.watch(lastParagraphProvider);
-    String currentParagraph = ref.watch(currentParagraphProvider);
-    return SizedBox(
-      width: double.infinity,
-      child: Center(
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              flex: 1,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  lastParagraph,
-                  textAlign: TextAlign.left,
-                  softWrap: true,
-                  style: TextStyle(),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: TextField(
-                readOnly: false,
-                enabled: isTextFieldEnabled,
-                keyboardType: TextInputType.multiline,
-                minLines: 10,
-                maxLines: 10,
-                decoration: InputDecoration(
-                  hintText: currentParagraph,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.white,
-                      width: 5.0,
-                    ),
-                  ),
-                ),
-                controller: controller,
-                canRequestFocus: true,
-                autofocus: true,
-                focusNode: textNode,
-                // Put clear and file save in onChanged because onSubmitted stopped working after changing to multiline textfield.
-                onChanged: (String value) {
-                  if (value.contains(String.fromCharCode(13)) ||
-                      value.contains(String.fromCharCode(10))) {
-                    textNode.unfocus();
-                    ref.read(lastParagraphProvider.notifier).state = value;
-                    ref.read(currentParagraphProvider.notifier).state = value;
-                    storage.writeFile(value);
-                    controller.clear();
-
-                    FocusScope.of(context).requestFocus(textNode);
-                  }
-                },
-                onSubmitted: (String value) {
-                  ref.read(lastParagraphProvider.notifier).state = value;
-                  storage.writeFile(value);
-                  controller.clear();
-                  // textNode.requestFocus(); // pretty sure this needs to be a stateful widget for this to work
-                },
-              ),
-            ),
-            Text('Timer widget goes here.'),
-            // Temporary solution to test saving files until I get save on Enter working again.
+            LastParagraph(),
+            Timer(),
+            OopsButton(),
+            CurrentParagraph(),
+            PauseButton(),
+            ProgressBar(),
           ],
         ),
       ),
