@@ -8,6 +8,9 @@ class AppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Write Turns'),
+        ),
         body: screen,
       ),
     );

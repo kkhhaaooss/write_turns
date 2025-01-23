@@ -22,19 +22,22 @@ class WritingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            LastParagraph(),
-            Timer(),
-            OopsButton(),
-            CurrentParagraph(),
-            PauseButton(),
-            ProgressBar(),
-          ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              LastParagraph(),
+              Timer(),
+              OopsButton(),
+              CurrentParagraph(),
+              PauseButton(),
+              ProgressBar(),
+            ],
+          ),
         ),
       ),
     );
