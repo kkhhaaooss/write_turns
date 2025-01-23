@@ -1,70 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:write_turns/providers/last_paragraph_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:io';
+import 'package:flutter_reactive_value/flutter_reactive_value.dart';
+import 'package:write_turns/controllers/storage.dart';
+import 'package:write_turns/screens/widgets/writing_screen/current_paragraph.dart';
+import 'package:write_turns/screens/widgets/writing_screen/last_paragraph.dart';
+import 'package:write_turns/screens/widgets/writing_screen/oops_button.dart';
+import 'package:write_turns/screens/widgets/writing_screen/pause_button.dart';
+import 'package:write_turns/screens/widgets/writing_screen/progress_bar.dart';
+import 'package:write_turns/screens/widgets/writing_screen/timer.dart';
 
-class DocumentStorage {
-  // temporary String, the currentDocument value will eventually be stored in shared prefs
-  String currentDocument = 'testfile.txt';
-  Future<String> get _localPath async {
-    final directory = await getExternalStorageDirectory();
-    print(directory == null ? 'Directory NULL' : 'Directory ${directory.path}');
-    return directory == null ? '' : directory.path;
-  }
+final previousParagraph = ReactiveValueNotifier('');
+final lastParagraph = ReactiveValueNotifier('Last Paragraph');
+final writingEnabled = ReactiveValueNotifier(true);
+final oopsFlag = ReactiveValueNotifier(false);
+final Storage storage = Storage();
+final FocusNode textFocus = FocusNode();
+final TextEditingController textController = TextEditingController();
+final TextEditingController lastController = TextEditingController();
 
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/$currentDocument');
-  }
-
-  Future<File> writeFile(String contents) async {
-    final file = await _localFile;
-    return file.writeAsString(contents, mode: FileMode.append);
-  }
-
-  Future<String> readFile() async {
-    try {
-      final file = await _localFile;
-      final contents = await file.readAsString();
-      return contents;
-    } catch (e) {
-      return 'The current document is empty.';
-    }
-  }
-}
-
-class EditorScreen extends ConsumerWidget {
-  const EditorScreen({super.key, required this.storage});
-  final DocumentStorage storage;
+class WritingScreen extends StatelessWidget {
+  const WritingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // will deal with focus later...
-    // late TextEditingController controller;
-    // controller = TextEditingController();
-    // late FocusNode textNode;
-    // textNode = FocusNode();
-    String lastParagraph = ref.watch(lastParagraphProvider);
-    return SizedBox(
-      width: double.infinity,
-      child: Center(
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(lastParagraph),
-            TextField(
-              // controller: controller,
-              canRequestFocus: true,
-              autofocus: true,
-              // focusNode: textNode,
-              onSubmitted: (String value) {
-                ref.read(lastParagraphProvider.notifier).state = value;
-                storage.writeFile(value);
-                value = '';
-                // textNode.requestFocus(); // pretty sure this needs to be a stateful widget for this to work
-              },
-            ),
-            Text('Another widget'),
+            LastParagraph(),
+            Timer(),
+            OopsButton(),
+            CurrentParagraph(),
+            PauseButton(),
+            ProgressBar(),
           ],
         ),
       ),

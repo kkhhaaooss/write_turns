@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:write_turns/providers/current_screen_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppScreen extends ConsumerWidget {
-  const AppScreen({super.key});
+class AppScreen extends StatelessWidget {
+  const AppScreen({super.key, required this.screen});
+  final Widget screen;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    Widget currentScreen = ref.watch(currentScreenProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Write Turns App'),
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: screen,
       ),
-      body: currentScreen,
     );
   }
 }
