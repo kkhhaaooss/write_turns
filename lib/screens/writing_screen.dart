@@ -11,6 +11,7 @@ import 'package:write_turns/screens/widgets/writing_screen/timer.dart';
 final previousParagraph = ReactiveValueNotifier('');
 final lastParagraph = ReactiveValueNotifier('Last Paragraph');
 final writingEnabled = ReactiveValueNotifier(true);
+final writeOrPause = ReactiveValueNotifier('Pause');
 final oopsFlag = ReactiveValueNotifier(false);
 final Storage storage = Storage();
 final FocusNode textFocus = FocusNode();

@@ -9,11 +9,15 @@ class PauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      // TODO Refocus to CurrentParagraph when going from pause to write mode.
+
       onPressed: () {
         writingEnabled.value = !writingEnabled.value;
+        (writeOrPause.value == 'Pause')
+            ? writeOrPause.value = 'Write!'
+            : writeOrPause.value = 'Pause';
       },
-      // TODO: Fix this button so it rebuilds when writingEnabled value is changed.
-      child: Text(writingEnabled.value == false ? 'Write!' : 'Pause'),
+      child: Text(writeOrPause.reactiveValue(context)),
     );
   }
 }
