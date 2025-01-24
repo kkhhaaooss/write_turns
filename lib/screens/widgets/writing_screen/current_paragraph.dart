@@ -35,7 +35,6 @@ class CurrentParagraph extends StatelessWidget {
           textController.clear();
           previousParagraph.value = lastParagraph.value;
           lastParagraph.value = value;
-          textFocus.requestFocus();
         }
       },
     );
