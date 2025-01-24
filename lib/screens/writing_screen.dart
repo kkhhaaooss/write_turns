@@ -23,12 +23,13 @@ class WritingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Center(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Center(
+        widthFactor: constraints.maxWidth,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               LastParagraph(),
@@ -40,7 +41,7 @@ class WritingScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

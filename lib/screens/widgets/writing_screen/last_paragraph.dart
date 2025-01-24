@@ -13,30 +13,32 @@ class LastParagraph extends StatelessWidget {
     // Make the last paragraph text selectable
     lastController.selection =
         TextSelection(baseOffset: 0, extentOffset: lastController.text.length);
-    return Builder(
-      builder: (subContext) {
-        textFocus.requestFocus();
-        return TextFormField(
-          controller: lastController,
-          autofocus: false,
-          readOnly: true,
-          minLines: 8,
-          maxLines: 8,
-          // initialValue: lastParagraph.reactiveValue(context),
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey,
-          ),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.grey,
-                width: 5.0,
+    return Expanded(
+      child: Builder(
+        builder: (subContext) {
+          textFocus.requestFocus();
+          return TextFormField(
+            controller: lastController,
+            autofocus: false,
+            readOnly: true,
+            minLines: 8,
+            maxLines: 8,
+            // initialValue: lastParagraph.reactiveValue(context),
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey,
+            ),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                  width: 5.0,
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
