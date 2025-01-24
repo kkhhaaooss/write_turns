@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AppScreen(
-        screen: currentScreen.value,
+        screen: currentScreen.reactiveValue(context),
       ),
     );
   }
